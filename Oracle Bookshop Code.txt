@@ -1,0 +1,723 @@
+-- Create Authors table
+CREATE TABLE Authors (
+  author_id VARCHAR2(10) PRIMARY KEY,
+  author_name VARCHAR2(100),
+  author_birthdate DATE,
+  author_country VARCHAR2(100)
+);
+
+-- Create sequence for Authors table
+CREATE SEQUENCE seq_authors
+  START WITH 00001
+  INCREMENT BY 1
+  NOMAXVALUE
+  NOCACHE
+  NOCYCLE;
+
+-- Create Publishers table
+CREATE TABLE Publishers (
+  publisher_id VARCHAR2(10) PRIMARY KEY,
+  publisher_name VARCHAR2(100),
+  publisher_location VARCHAR2(100),
+  publisher_contact VARCHAR2(100)
+);
+
+-- Create sequence for Publishers table
+CREATE SEQUENCE seq_publishers
+  START WITH 00001
+  INCREMENT BY 1
+  NOMAXVALUE 
+  NOCACHE
+  NOCYCLE;
+
+
+-- Create Books table
+CREATE TABLE Books (
+  book_id VARCHAR2(10) PRIMARY KEY,
+  book_title VARCHAR2(100),
+  book_genre VARCHAR2(100),
+  book_publication_date DATE,
+  book_price NUMBER,
+  publisher_id VARCHAR2(10),
+  author_id  VARCHAR2(10),
+  CONSTRAINT fk_books_publishers FOREIGN KEY (publisher_id) REFERENCES Publishers(publisher_id),
+  CONSTRAINT fk_books_authors FOREIGN KEY (author_id) REFERENCES Authors(author_id)
+);
+
+-- Create sequence for Books table
+CREATE SEQUENCE seq_books
+  START WITH 00001
+  INCREMENT BY 1
+  NOMAXVALUE
+  NOCACHE
+  NOCYCLE;
+
+-- Create Customers table
+CREATE TABLE Customers (
+  customer_id VARCHAR2(10) PRIMARY KEY,
+  customer_name VARCHAR2(100),
+  customer_email VARCHAR2(100),
+  customer_address VARCHAR2(100),
+  customer_phone VARCHAR2(100)
+);
+
+-- Create sequence for Customers table
+CREATE SEQUENCE seq_customers
+  START WITH 00001
+  INCREMENT BY 1
+  NOMAXVALUE
+  NOCACHE
+  NOCYCLE;
+
+-- Create Orders table
+CREATE TABLE Orders (
+  order_id VARCHAR2(10) PRIMARY KEY,
+  customer_id VARCHAR2(10),
+  order_date DATE,
+  total_amount NUMBER,
+  CONSTRAINT fk_orders_customers FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+-- Create sequence for Orders table
+CREATE SEQUENCE seq_orders
+  START WITH 00001
+  INCREMENT BY 1
+  NOMAXVALUE
+  NOCACHE
+  NOCYCLE;
+
+-- Create Order_Items table
+CREATE TABLE Order_Items (
+  order_item_id VARCHAR2(10) PRIMARY KEY,
+  order_id VARCHAR2(10),
+  book_id VARCHAR2(10),
+  quantity NUMBER,
+  item_price NUMBER,
+  CONSTRAINT fk_order_items_orders FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+  CONSTRAINT fk_order_items_books FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+-- Create sequence for Order_Items table
+CREATE SEQUENCE seq_order_items
+  START WITH 00001
+  INCREMENT BY 1
+  NOMAXVALUE
+  NOCACHE
+  NOCYCLE;
+
+-- Create Reviews table
+CREATE TABLE Reviews (
+  review_id VARCHAR2(10) PRIMARY KEY,
+  book_id VARCHAR2(10),
+  customer_id VARCHAR2(10),
+  review_text VARCHAR2(1000),
+  review_date DATE,
+  rating NUMBER,
+  CONSTRAINT fk_reviews_books FOREIGN KEY (book_id) REFERENCES Books(book_id),
+  CONSTRAINT fk_reviews_customers FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+-- Create sequence for Reviews table
+CREATE SEQUENCE seq_reviews
+  START WITH 00001
+  INCREMENT BY 1
+  NOMAXVALUE 
+  NOCACHE
+  NOCYCLE;
+  
+ 
+  
+  
+  
+  -- Inserting data for author_id A001
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'J.K. Rowling', TO_DATE('1965-07-31', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A002
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'George R.R. Martin', TO_DATE('1948-09-20', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A3
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Stephen King', TO_DATE('1947-09-21', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A4
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'J.R.R. Tolkien', TO_DATE('1892-01-03', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A5
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Agatha Christie', TO_DATE('1890-09-15', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A6
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Harper Lee', TO_DATE('1926-04-28', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A7
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'George Orwell', TO_DATE('1903-06-25', 'YYYY-MM-DD'), 'United Kingdom');
+
+
+-- Inserting data for author_id A8
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'F. Scott Fitzgerald', TO_DATE('1896-09-24', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A9
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Jane Austen', TO_DATE('1775-12-16', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A10
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'J.D. Salinger', TO_DATE('1919-01-01', 'YYYY-MM-DD'), 'United States');
+
+
+-- Inserting data for author_id A11
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Charlotte Brontë', TO_DATE('1816-04-21', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A12
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Paulo Coelho', TO_DATE('1947-08-24', 'YYYY-MM-DD'), 'Brazil');
+
+-- Inserting data for author_id A13
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Suzanne Collins', TO_DATE('1962-08-10', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A14
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Dan Brown', TO_DATE('1964-06-22', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A15
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'John Green', TO_DATE('1977-08-24', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A16
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Gillian Flynn', TO_DATE('1971-02-24', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A017
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'C.S. Lewis', TO_DATE('1898-11-29', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A018
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Paula Hawkins', TO_DATE('1972-08-26', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A019
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Khaled Hosseini', TO_DATE('1965-03-04', 'YYYY-MM-DD'), 'Afghanistan');
+
+-- Inserting data for author_id A020
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'James Dashner', TO_DATE('1972-11-26', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A021
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Stieg Larsson', TO_DATE('1954-08-15', 'YYYY-MM-DD'), 'Sweden');
+
+-- Inserting data for author_id A022
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Anne Frank', TO_DATE('1929-06-12', 'YYYY-MM-DD'), 'Germany');
+
+-- Inserting data for author_id A23
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Yuval Noah Harari', TO_DATE('1976-02-24', 'YYYY-MM-DD'), 'Israel');
+
+-- Inserting data for author_id A24
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Stephenie Meyer', TO_DATE('1973-12-24', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A25
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Emily Brontë', TO_DATE('1818-07-30', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A26
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Bram Stoker', TO_DATE('1847-11-08', 'YYYY-MM-DD'), 'Ireland');
+
+-- Inserting data for author_id A27
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Mary Shelley', TO_DATE('1797-08-30', 'YYYY-MM-DD'), 'United Kingdom');
+
+-- Inserting data for author_id A28
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Shirley Jackson', TO_DATE('1916-12-14', 'YYYY-MM-DD'), 'United States');
+
+-- Inserting data for author_id A29
+INSERT INTO Authors (author_id, author_name, author_birthdate, author_country)
+VALUES ('A'||seq_authors.NEXTVAL, 'Daphne du Maurier', TO_DATE('1907-05-13', 'YYYY-MM-DD'), 'United Kingdom');
+
+
+-- Inserting data for publisher_id P1
+INSERT INTO Publishers (publisher_id, publisher_name, publisher_location, publisher_contact)
+VALUES ('P'||seq_publishers.NEXTVAL, 'Penguin Random House', 'New York', 'info@penguinrandomhouse.com');
+
+-- Inserting data for publisher_id P2
+INSERT INTO Publishers (publisher_id, publisher_name, publisher_location, publisher_contact)
+VALUES ('P'||seq_publishers.NEXTVAL, 'HarperCollins Publishers', 'New York', 'info@harpercollins.com');
+
+-- Inserting data for publisher_id P3
+INSERT INTO Publishers (publisher_id, publisher_name, publisher_location, publisher_contact)
+VALUES ('P'||seq_publishers.NEXTVAL, 'Hachette Livre', 'Paris', 'info@hachette-livre.fr');
+
+-- Inserting data for publisher_id P4
+INSERT INTO Publishers (publisher_id, publisher_name, publisher_location, publisher_contact)
+VALUES ('P'||seq_publishers.NEXTVAL, 'Simon and Schuster', 'New York', 'info@simonandschuster.com');
+
+-- Inserting data for publisher_id P5
+INSERT INTO Publishers (publisher_id, publisher_name, publisher_location, publisher_contact)
+VALUES ('P'||seq_publishers.NEXTVAL, 'Macmillan Publishers', 'London', 'info@macmillan.com');
+
+-- Inserting data for publisher_id P6
+INSERT INTO Publishers (publisher_id, publisher_name, publisher_location, publisher_contact)
+VALUES ('P'||seq_publishers.NEXTVAL, 'Oxford University Press', 'Oxford', 'info@oup.com');
+select * from authors;
+-- Inserting data for book_id B1
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, '1984', 'Dystopian Fiction', TO_DATE('1949-06-08', 'YYYY-MM-DD'), 9.99, 'P1','A7');
+
+-- Inserting data for book_id B2
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'To Kill a Mockingbird', 'Fiction', TO_DATE('1960-07-11', 'YYYY-MM-DD'), 12.99, 'P2','A6');
+
+-- Inserting data for book_id B3
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Harry Potter and the Philosopher''s Stone', 'Fantasy', TO_DATE('1997-06-26', 'YYYY-MM-DD'), 14.99, 'P1','A1');
+
+-- Inserting data for book_id B4
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Great Gatsby', 'Fiction', TO_DATE('1925-04-10', 'YYYY-MM-DD'), 11.99, 'P3','A8');
+
+-- Inserting data for book_id B5
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Pride and Prejudice', 'Classic Literature', TO_DATE('1813-01-28', 'YYYY-MM-DD'), 10.99, 'P4','A9');
+
+-- Inserting data for book_id B6
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Catcher in the Rye', 'Coming-of-Age Fiction', TO_DATE('1951-07-16', 'YYYY-MM-DD'), 8.99, 'P2','A10');
+
+-- Inserting data for book_id B7
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Hobbit', 'Fantasy', TO_DATE('1937-09-21', 'YYYY-MM-DD'), 13.99, 'P5','A4');
+
+-- Inserting data for book_id B8
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Lord of the Rings', 'Fantasy', TO_DATE('1954-07-29', 'YYYY-MM-DD'), 29.99, 'P5','A4');
+
+-- Inserting data for book_id B9
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Jane Eyre', 'Gothic Fiction', TO_DATE('1847-10-16', 'YYYY-MM-DD'), 9.99, 'P6','A11');
+
+-- Inserting data for book_id B10
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Alchemist', 'Fiction', TO_DATE('1988-01-01', 'YYYY-MM-DD'), 12.99, 'P4','A12');
+
+-- Inserting data for book_id B11
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Hunger Games', 'Young Adult', TO_DATE('2008-09-14', 'YYYY-MM-DD'), 10.99, 'P3','A13');
+
+-- Inserting data for book_id B012
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Da Vinci Code', 'Thriller', TO_DATE('2003-03-18', 'YYYY-MM-DD'), 14.99, 'P2','A14');
+
+-- Inserting data for book_id B013
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Fault in Our Stars', 'Young Adult', TO_DATE('2012-01-10', 'YYYY-MM-DD'), 9.99, 'P1','A15');
+
+-- Inserting data for book_id B014
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Gone Girl', 'Mystery', TO_DATE('2012-06-05', 'YYYY-MM-DD'), 12.99, 'P3','A16');
+
+-- Inserting data for book_id B015
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Chronicles of Narnia', 'Fantasy', TO_DATE('1950-10-16', 'YYYY-MM-DD'), 16.99, 'P5','A17');
+
+-- Inserting data for book_id B016
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Girl on the Train', 'Psychological Thriller', TO_DATE('2015-01-13', 'YYYY-MM-DD'), 11.99, 'P2','A18');
+
+-- Inserting data for book_id B017
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Kite Runner', 'Historical Fiction', TO_DATE('2003-05-29', 'YYYY-MM-DD'), 13.99, 'P4','A19');
+
+-- Inserting data for book_id B018
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Maze Runner', 'Science Fiction', TO_DATE('2009-10-07', 'YYYY-MM-DD'), 10.99, 'P3','A20');
+
+-- Inserting data for book_id B019
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Girl with the Dragon Tattoo', 'Crime Fiction', TO_DATE('2005-08-19', 'YYYY-MM-DD'), 14.99, 'P2','A21');
+
+-- Inserting data for book_id B020
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Diary of a Young Girl', 'Biography', TO_DATE('1947-06-25', 'YYYY-MM-DD'), 9.99, 'P6','A22');
+
+-- Inserting data for book_id B021
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Sapiens: A Brief History of Humankind', 'Non-Fiction', TO_DATE('2011-05-15', 'YYYY-MM-DD'), 15.99, 'P1','A23');
+
+
+-- Inserting data for book_id B022
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Twilight', 'Romance', TO_DATE('2005-10-05', 'YYYY-MM-DD'), 11.99, 'P3','A24');
+
+-- Inserting data for book_id B023
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Jane Eyre', 'Romance', TO_DATE('1847-10-16', 'YYYY-MM-DD'), 9.99, 'P6','A11');
+
+-- Inserting data for book_id B024
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Wuthering Heights', 'Romance', TO_DATE('1847-12-19', 'YYYY-MM-DD'), 12.99, 'P6','A25');
+
+-- Inserting data for book_id B025
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Dracula', 'Horror', TO_DATE('1897-05-26', 'YYYY-MM-DD'), 9.99, 'P4','A26');
+
+-- Inserting data for book_id B026
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Frankenstein', 'Horror', TO_DATE('1818-01-01', 'YYYY-MM-DD'), 11.99, 'P3','A27');
+
+-- Inserting data for book_id B027
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Shining', 'Horror', TO_DATE('1977-01-28', 'YYYY-MM-DD'), 14.99, 'P2','A3');
+
+-- Inserting data for book_id B028
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'It', 'Horror', TO_DATE('1986-09-15', 'YYYY-MM-DD'), 13.99, 'P2','A3');
+
+-- Inserting data for book_id B029
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'The Haunting of Hill House', 'Horror', TO_DATE('1959-10-16', 'YYYY-MM-DD'), 10.99, 'P5','A28');
+
+-- Inserting data for book_id B30
+INSERT INTO Books (book_id, book_title, book_genre, book_publication_date, book_price, publisher_id,author_id)
+VALUES ('B'||seq_books.NEXTVAL, 'Rebecca', 'Romance', TO_DATE('1938-08-19', 'YYYY-MM-DD'), 12.99, 'P6','A29');
+
+-- Inserting data for customer_id C1
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Kamal Perera', 'kamalperera@example.com', '123 Main St, Colombo', '+94 77-123-4567');
+
+-- Inserting data for customer_id C2
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Nimal Fernando', 'nimalfernando@example.com', '456 Galle Rd, Kandy', '+94 76-987-6543');
+
+-- Inserting data for customer_id C3
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Samantha Silva', 'samanthasilva@example.com', '789 Negombo Rd, Negombo', '+94 71-555-4444');
+
+-- Inserting data for customer_id C4
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Priyanthi Gunaratne', 'priyanthigunaratne@example.com', '321 Kandy Rd, Gampaha', '+94 76-999-8888');
+
+-- Inserting data for customer_id C5
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Ravi Bandara', 'ravibandara@example.com', '567 Main St, Matara', '+94 77-111-2222');
+
+-- Inserting data for customer_id C6
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Mala Perumal', 'malaperumal@example.com', '987 Galle Rd, Jaffna', '+94 76-444-5555');
+
+-- Inserting data for customer_id C7
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Chaminda Jayawardena', 'chamindajayawardena@example.com', '654 Colombo Rd, Kurunegala', '+94 71-777-8888');
+
+-- Inserting data for customer_id C8
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Sarala Rajapakse', 'saralarajapakse@example.com', '852 Negombo Rd, Anuradhapura', '+94 77-222-3333');
+
+-- Inserting data for customer_id C9
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Dilshan Peiris', 'dilshanpeiris@example.com', '456 Kandy Rd, Galle', '+94 76-666-7777');
+
+-- Inserting data for customer_id C10
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Malini Wijesuriya', 'maliniwijesuriya@example.com', '123 Main St, Ratnapura', '+94 71-999-8888');
+
+-- Inserting data for customer_id C11
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Thilak Kumara', 'thilakkumara@example.com', '789 Galle Rd, Badulla', '+94 76-333-4444');
+
+-- Inserting data for customer_id C12
+INSERT INTO Customers (customer_id, customer_name, customer_email, customer_address, customer_phone)
+VALUES ('C'||seq_customers.NEXTVAL, 'Kumari Jayasinghe', 'kumarijayasinghe@example.com', '987 Colombo Rd, Kurunegala', '+94 71-777-6666');
+
+-- Inserting data for order_id O1
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C1', TO_DATE('2023-06-01', 'YYYY-MM-DD'), 150.00);
+
+-- Inserting data for order_id O2
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C2', TO_DATE('2023-06-02', 'YYYY-MM-DD'), 120.50);
+
+-- Inserting data for order_id O3
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C3', TO_DATE('2023-06-02', 'YYYY-MM-DD'), 75.80);
+
+-- Inserting data for order_id O4
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C4', TO_DATE('2023-06-03', 'YYYY-MM-DD'), 200.00);
+
+-- Inserting data for order_id O5
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C5', TO_DATE('2023-06-04', 'YYYY-MM-DD'), 85.20);
+
+-- Inserting data for order_id O6
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C6', TO_DATE('2023-06-05', 'YYYY-MM-DD'), 175.50);
+
+-- Inserting data for order_id O7
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C7', TO_DATE('2023-06-06', 'YYYY-MM-DD'), 110.00);
+
+-- Inserting data for order_id O8
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C8', TO_DATE('2023-06-06', 'YYYY-MM-DD'), 95.75);
+
+-- Inserting data for order_id O9
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C9', TO_DATE('2023-06-07', 'YYYY-MM-DD'), 120.25);
+
+-- Inserting data for order_id O10
+INSERT INTO Orders (order_id, customer_id, order_date, total_amount)
+VALUES ('O'||seq_orders.NEXTVAL, 'C10', TO_DATE('2023-06-08', 'YYYY-MM-DD'), 140.00);
+
+-- Inserting data for order_item_id OI1
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O1', 'B1', 2, 20.00);
+
+-- Inserting data for order_item_id OI2
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O2', 'B2', 1, 15.50);
+
+-- Inserting data for order_item_id OI3
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O2', 'B4', 3, 8.60);
+
+-- Inserting data for order_item_id OI4
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O3', 'B1', 1, 20.00);
+
+-- Inserting data for order_item_id OI5
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O4', 'B3', 2, 25.00);
+
+-- Inserting data for order_item_id OI6
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O5', 'B5', 1, 10.50);
+
+-- Inserting data for order_item_id OI7
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O6', 'B1', 2, 20.00);
+
+-- Inserting data for order_item_id OI8
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O6', 'B3', 1, 25.00);
+
+-- Inserting data for order_item_id OI9
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O7', 'B2', 3, 15.50);
+
+-- Inserting data for order_item_id OI10
+INSERT INTO Order_Items (order_item_id, order_id, book_id, quantity, item_price)
+VALUES ('OI'||seq_order_items.NEXTVAL, 'O8', 'B4', 2, 8.60);
+
+-- Inserting data for review_id R1
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B1', 'C1', 'Great book! I highly recommend it.', TO_DATE('2023-06-01', 'YYYY-MM-DD'), 5);
+
+-- Inserting data for review_id R2
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B2', 'C2', 'An intriguing story with unexpected twists.', TO_DATE('2023-06-02', 'YYYY-MM-DD'), 4);
+
+-- Inserting data for review_id R3
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B3', 'C3', 'A must-read for mystery lovers.', TO_DATE('2023-06-02', 'YYYY-MM-DD'), 4);
+
+-- Inserting data for review_id R4
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B4', 'C4', 'Captivating characters and beautiful prose.', TO_DATE('2023-06-03', 'YYYY-MM-DD'), 5);
+
+-- Inserting data for review_id R5
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B5', 'C5', 'A heartwarming story of love and friendship.', TO_DATE('2023-06-04', 'YYYY-MM-DD'), 4);
+
+-- Inserting data for review_id R6
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B1', 'C6', 'Couldnt put it down! Absolutely loved it.', TO_DATE('2023-06-05', 'YYYY-MM-DD'), 5);
+
+-- Inserting data for review_id R7
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B2', 'C7', 'An emotional rollercoaster that touched my heart.', TO_DATE('2023-06-06', 'YYYY-MM-DD'), 5);
+
+-- Inserting data for review_id R8
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B3', 'C8', 'A gripping page-turner that kept me hooked.', TO_DATE('2023-06-06', 'YYYY-MM-DD'), 4);
+
+-- Inserting data for review_id R9
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B4', 'C9', 'A thought-provoking and beautifully written book.', TO_DATE('2023-06-07', 'YYYY-MM-DD'), 5);
+
+-- Inserting data for review_id R10
+INSERT INTO Reviews (review_id, book_id, customer_id, review_text, review_date, rating)
+VALUES ('R'||seq_reviews.NEXTVAL, 'B5', 'C10', 'Highly recommended for fans of the genre.', TO_DATE('2023-06-08', 'YYYY-MM-DD'), 4);
+
+
+--To check whether data is inserted
+select * from authors;
+select * from publishers;
+select * from customers;
+select * from orders;
+select * from books;
+select * from reviews;
+select * from order_items;
+
+  
+  --03.
+-- Select query using WHERE clause
+SELECT * FROM Books WHERE book_genre = 'Fiction';
+
+-- Select query using GROUP BY clause
+SELECT book_genre, COUNT(*) AS total_books FROM Books GROUP BY book_genre;
+
+-- Select query using HAVING clause
+SELECT book_genre, COUNT(*) AS total_books FROM Books GROUP BY book_genre HAVING COUNT(*) > 3;
+
+-- Select query using ORDER BY clause
+SELECT * FROM Books ORDER BY book_title ASC;
+
+
+  --04.
+-- Single-row subquery example
+SELECT book_title, (SELECT author_name FROM Authors WHERE author_id = Books.author_id) AS author_name
+FROM Books;
+
+-- Multiple-row subquery example
+SELECT book_title, book_genre
+FROM Books
+WHERE publisher_id IN (SELECT publisher_id FROM Publishers WHERE publisher_location = 'New York');
+
+   --05.
+-- Left join example
+SELECT  C.customer_id,C.customer_name,C.customer_address,C.customer_phone,O.order_date,O.total_amount
+FROM Customers C
+LEFT JOIN Orders O ON C.customer_id = O.customer_id;
+
+-- Right join example
+SELECT  C.customer_id,C.customer_name,C.customer_address,C.customer_phone,O.order_date,O.total_amount
+FROM Customers C
+RIGHT JOIN Orders O ON C.customer_id = O.customer_id;
+
+-- Full outer join example
+SELECT  C.customer_id,C.customer_name,C.customer_address,C.customer_phone,O.order_date,O.total_amount
+FROM Customers C
+FULL OUTER JOIN Orders O ON C.customer_id = O.customer_id;
+
+
+ --06.
+-- Create a view
+CREATE VIEW BookDetails AS
+SELECT book_title, book_genre, book_price
+FROM Books
+WHERE book_publication_date <= TO_DATE('2020-01-01', 'YYYY-MM-DD');
+
+select * from BookDetails;
+select * from Books;
+ --07.
+-- PL/SQL block example
+SET SERVEROUTPUT ON;
+DECLARE
+  v_book_title Books.book_title%TYPE;
+  v_book_genre Books.book_genre%TYPE;
+  v_book_date Books.book_publication_date%TYPE;
+  v_book_price Books.book_price%TYPE;
+  v_book_publisher Books.publisher_id%TYPE;
+  v_book_author Books.author_id%TYPE;
+  v_book_id Books.book_id%TYPE:='&p_book_id';
+BEGIN
+  SELECT book_title,book_genre,book_publication_date,book_price,publisher_id,author_id 
+  INTO v_book_title,v_book_genre,v_book_date,v_book_price,v_book_publisher,v_book_author
+  FROM Books WHERE book_id =v_book_id ;
+  DBMS_OUTPUT.PUT_LINE('BOOK DETAILS:...........');
+  DBMS_OUTPUT.PUT_LINE('Book Title: ' || v_book_title);
+  DBMS_OUTPUT.PUT_LINE('Book Genre: ' || v_book_genre);
+  DBMS_OUTPUT.PUT_LINE('Book Published Date: ' || v_book_date);
+  DBMS_OUTPUT.PUT_LINE('Book Price: ' || v_book_price);
+  DBMS_OUTPUT.PUT_LINE('Book Publisher ID: ' || v_book_publisher);
+  DBMS_OUTPUT.PUT_LINE('Book Author ID: ' || v_book_author);
+END;
+/
+
+
+
+ --08.
+-- PL/SQL block example
+DECLARE
+  v_quantity Order_Items.quantity%TYPE;
+    v_search_id Order_Items.order_item_id%TYPE:='&p_search_item_id';
+BEGIN
+  SELECT quantity INTO v_quantity FROM Order_Items WHERE order_item_id =v_search_id;
+  IF v_quantity < 10 THEN
+    UPDATE Order_Items SET quantity = v_quantity + 1 WHERE order_item_id = v_search_id;
+    DBMS_OUTPUT.PUT_LINE('Quantity updated.');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Maximum quantity reached.');
+  END IF;
+END;
+/
+
+
+
+ --09.
+-- PL/SQL block example
+DECLARE
+  v_order_id Orders.order_id%TYPE;
+   v_search_id Orders.order_id%TYPE:='&p_search_id';
+BEGIN
+  SELECT order_id INTO v_order_id FROM Orders WHERE order_id =v_search_id;
+  DELETE FROM Order_Items WHERE order_id = v_order_id;
+  DELETE FROM Orders WHERE order_id = v_order_id;
+  DBMS_OUTPUT.PUT_LINE('Order deleted.');
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Order not found.');
+END;
+/
+
+
+ --10.
+-- PL/SQL block example
+DECLARE
+  v_num_rows NUMBER;
+  v_order_id Order_Items.order_id%TYPE:='&p_order_id';
+BEGIN
+  DELETE FROM Order_Items WHERE order_id = v_order_id;
+  v_num_rows := SQL%ROWCOUNT;
+    if(v_num_rows>0) THEN
+     DBMS_OUTPUT.PUT_LINE(v_num_rows || ' rows deleted.');
+   else
+    DBMS_OUTPUT.PUT_LINE('NO RECORD FOUND TO DELETE for Order Id :'||v_order_id );
+    end if;
+END;
+/
+
+-----------------------------------------------------------------------------------------------------------
+
+--DROP DETAILS 
+
+DROP TABLE Reviews;
+DROP TABLE Order_Items;
+DROP TABLE Orders;
+DROP TABLE Customers;
+DROP TABLE Books;
+DROP TABLE Publishers;
+DROP TABLE Authors;
+
+
+ Drop SEQUENCE SEQ_authors;
+ Drop SEQUENCE SEQ_publishers;
+ Drop SEQUENCE SEQ_books;
+ Drop SEQUENCE SEQ_customers;
+ Drop SEQUENCE SEQ_orders;
+ Drop SEQUENCE SEQ_order_items;
+ Drop SEQUENCE SEQ_reviews;
+ Drop View BookDetails;
